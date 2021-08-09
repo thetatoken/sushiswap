@@ -35,7 +35,7 @@ describe("MasterChefV2", function () {
 
   describe("Init", function () {
     it("Balance of dummyToken should be 0 after init(), repeated execution should fail", async function () {
-      await expect(this.chef2.init(this.dummy.address)).to.be.revertedWith("Balance must exceed 0")
+      await expect(this.chef2.init(this.dummy.address)).to.be.revertedWith("evm: execution reverted")
     })
   })
 
@@ -63,7 +63,7 @@ describe("MasterChefV2", function () {
         err = e
       }
 
-      assert.equal(err.toString(), "Error: VM Exception while processing transaction: invalid opcode")
+      assert.equal(err.toString(), "invalid opcode 0xfe")
     })
   })
 
@@ -112,7 +112,7 @@ describe("MasterChefV2", function () {
         err = e
       }
 
-      assert.equal(err.toString(), "Error: VM Exception while processing transaction: invalid opcode")
+      assert.equal(err.toString(), "invalid opcode 0xfe")
     })
   })
 
@@ -165,7 +165,7 @@ describe("MasterChefV2", function () {
         err = e
       }
 
-      assert.equal(err.toString(), "Error: VM Exception while processing transaction: invalid opcode")
+      assert.equal(err.toString(), "invalid opcode 0xfe")
     })
   })
 

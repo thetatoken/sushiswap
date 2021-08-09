@@ -57,7 +57,7 @@ describe("MiniChefV2", function () {
         err = e;
       }
 
-      assert.equal(err.toString(), "Error: VM Exception while processing transaction: invalid opcode")
+      assert.equal(err.toString(), "invalid opcode 0xfe")
     })
   })
 
@@ -106,7 +106,7 @@ describe("MiniChefV2", function () {
         err = e;
       }
 
-      assert.equal(err.toString(), "Error: VM Exception while processing transaction: invalid opcode")
+      assert.equal(err.toString(), "invalid opcode 0xfe")
     })
 })
 
@@ -159,7 +159,7 @@ describe("MiniChefV2", function () {
         err = e;
       }
 
-      assert.equal(err.toString(), "Error: VM Exception while processing transaction: invalid opcode")
+      assert.equal(err.toString(), "invalid opcode 0xfe")
     })
   })
 

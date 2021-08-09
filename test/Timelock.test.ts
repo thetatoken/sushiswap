@@ -26,8 +26,8 @@ describe("Timelock", function () {
     await this.sushi.transferOwnership(this.timelock.address)
     // await expectRevert(this.sushi.transferOwnership(carol, { from: alice }), "Ownable: caller is not the owner")
 
-    await expect(this.sushi.transferOwnership(this.carol.address)).to.be.revertedWith("Ownable: caller is not the owner")
-    await expect(this.sushi.connect(this.bob).transferOwnership(this.carol.address)).to.be.revertedWith("Ownable: caller is not the owner")
+    await expect(this.sushi.transferOwnership(this.carol.address)).to.be.revertedWith("evm: execution reverted")
+    await expect(this.sushi.connect(this.bob).transferOwnership(this.carol.address)).to.be.revertedWith("evm: execution reverted")
 
     await expect(
       this.timelock.queueTransaction(
@@ -37,7 +37,7 @@ describe("Timelock", function () {
         encodeParameters(["address"], [this.carol.address]),
         (await latest()).add(duration.days(4))
       )
-    ).to.be.revertedWith("Timelock::queueTransaction: Call must come from admin.")
+    ).to.be.revertedWith("evm: execution reverted")
   })
 
   it("should do the timelock thing", async function () {
@@ -51,7 +51,7 @@ describe("Timelock", function () {
       this.timelock
         .connect(this.bob)
         .executeTransaction(this.sushi.address, "0", "transferOwnership(address)", encodeParameters(["address"], [this.carol.address]), eta)
-    ).to.be.revertedWith("Timelock::executeTransaction: Transaction hasn't surpassed time lock.")
+    ).to.be.revertedWith("evm: execution reverted")
     await increase(duration.days(4))
     await this.timelock
       .connect(this.bob)

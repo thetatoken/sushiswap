@@ -43,7 +43,7 @@ describe("MasterChef", function () {
 
     expect(await this.chef.devaddr()).to.equal(this.dev.address)
 
-    await expect(this.chef.connect(this.bob).dev(this.bob.address, { from: this.bob.address })).to.be.revertedWith("dev: wut?")
+    await expect(this.chef.connect(this.bob).dev(this.bob.address, { from: this.bob.address })).to.be.revertedWith("evm: execution reverted")
 
     await this.chef.connect(this.dev).dev(this.bob.address, { from: this.dev.address })
 

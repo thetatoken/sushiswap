@@ -28,7 +28,7 @@ describe("SushiToken", function () {
     await this.sushi.mint(this.alice.address, "100")
     await this.sushi.mint(this.bob.address, "1000")
     await expect(this.sushi.connect(this.bob).mint(this.carol.address, "1000", { from: this.bob.address })).to.be.revertedWith(
-      "Ownable: caller is not the owner"
+      "evm: execution reverted"
     )
     const totalSupply = await this.sushi.totalSupply()
     const aliceBal = await this.sushi.balanceOf(this.alice.address)
@@ -59,9 +59,9 @@ describe("SushiToken", function () {
 
   it("should fail if you try to do bad transfers", async function () {
     await this.sushi.mint(this.alice.address, "100")
-    await expect(this.sushi.transfer(this.carol.address, "110")).to.be.revertedWith("ERC20: transfer amount exceeds balance")
+    await expect(this.sushi.transfer(this.carol.address, "110")).to.be.revertedWith("evm: execution reverted")
     await expect(this.sushi.connect(this.bob).transfer(this.carol.address, "1", { from: this.bob.address })).to.be.revertedWith(
-      "ERC20: transfer amount exceeds balance"
+      "evm: execution reverted"
     )
   })
 })

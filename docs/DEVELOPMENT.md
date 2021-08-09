@@ -24,6 +24,9 @@ yarn test
 
 ```sh
 yarn test test/MasterChef.test.js
+
+npx hardhat test test/SushiBar.test.ts --network theta_privatenet
+npx hardhat test test/SushiToken.test.ts --network theta_privatenet
 ```
 
 Mocha & Chai with Waffle matchers (these are really useful).

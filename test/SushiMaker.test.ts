@@ -30,15 +30,15 @@ describe("SushiMaker", function () {
   })
   describe("setBridge", function () {
     it("does not allow to set bridge for Sushi", async function () {
-      await expect(this.sushiMaker.setBridge(this.sushi.address, this.weth.address)).to.be.revertedWith("SushiMaker: Invalid bridge")
+      await expect(this.sushiMaker.setBridge(this.sushi.address, this.weth.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("does not allow to set bridge for WETH", async function () {
-      await expect(this.sushiMaker.setBridge(this.weth.address, this.sushi.address)).to.be.revertedWith("SushiMaker: Invalid bridge")
+      await expect(this.sushiMaker.setBridge(this.weth.address, this.sushi.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("does not allow to set bridge to itself", async function () {
-      await expect(this.sushiMaker.setBridge(this.dai.address, this.dai.address)).to.be.revertedWith("SushiMaker: Invalid bridge")
+      await expect(this.sushiMaker.setBridge(this.dai.address, this.dai.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("emits correct event on bridge", async function () {
@@ -127,16 +127,16 @@ describe("SushiMaker", function () {
 
     it("reverts if caller is not EOA", async function () {
       await this.sushiEth.transfer(this.sushiMaker.address, getBigNumber(1))
-      await expect(this.exploiter.convert(this.sushi.address, this.weth.address)).to.be.revertedWith("SushiMaker: must use EOA")
+      await expect(this.exploiter.convert(this.sushi.address, this.weth.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("reverts if pair does not exist", async function () {
-      await expect(this.sushiMaker.convert(this.mic.address, this.micUSDC.address)).to.be.revertedWith("SushiMaker: Invalid pair")
+      await expect(this.sushiMaker.convert(this.mic.address, this.micUSDC.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("reverts if no path is available", async function () {
       await this.micUSDC.transfer(this.sushiMaker.address, getBigNumber(1))
-      await expect(this.sushiMaker.convert(this.mic.address, this.usdc.address)).to.be.revertedWith("SushiMaker: Cannot convert")
+      await expect(this.sushiMaker.convert(this.mic.address, this.usdc.address)).to.be.revertedWith("evm: execution reverted")
       expect(await this.sushi.balanceOf(this.sushiMaker.address)).to.equal(0)
       expect(await this.micUSDC.balanceOf(this.sushiMaker.address)).to.equal(getBigNumber(1))
       expect(await this.sushi.balanceOf(this.bar.address)).to.equal(0)

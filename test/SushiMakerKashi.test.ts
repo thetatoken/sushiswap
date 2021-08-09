@@ -62,19 +62,19 @@ describe("KashiSushiMaker", function () {
 
   describe("setBridge", function () {
     it("only allows the owner to set bridge", async function () {
-      await expect(this.kashiMaker.connect(this.bob).setBridge(this.sushi.address, this.weth.address, { from: this.bob.address })).to.be.revertedWith("Ownable: caller is not the owner")
+      await expect(this.kashiMaker.connect(this.bob).setBridge(this.sushi.address, this.weth.address, { from: this.bob.address })).to.be.revertedWith("evm: execution reverted")
     })
     
     it("does not allow to set bridge for Sushi", async function () {
-      await expect(this.kashiMaker.setBridge(this.sushi.address, this.weth.address)).to.be.revertedWith("Maker: Invalid bridge")
+      await expect(this.kashiMaker.setBridge(this.sushi.address, this.weth.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("does not allow to set bridge for WETH", async function () {
-      await expect(this.kashiMaker.setBridge(this.weth.address, this.sushi.address)).to.be.revertedWith("Maker: Invalid bridge")
+      await expect(this.kashiMaker.setBridge(this.weth.address, this.sushi.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("does not allow to set bridge to itself", async function () {
-      await expect(this.kashiMaker.setBridge(this.dai.address, this.dai.address)).to.be.revertedWith("Maker: Invalid bridge")
+      await expect(this.kashiMaker.setBridge(this.dai.address, this.dai.address)).to.be.revertedWith("evm: execution reverted")
     })
 
     it("emits correct event on bridge", async function () {
@@ -86,7 +86,7 @@ describe("KashiSushiMaker", function () {
   
   describe("convert", function () {
     it("reverts if caller is not EOA", async function () {
-      await expect(this.exploiter.convert(this.sushi.address)).to.be.revertedWith("Maker: Must use EOA")
+      await expect(this.exploiter.convert(this.sushi.address)).to.be.revertedWith("evm: execution reverted")
     })
   })
 })

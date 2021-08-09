@@ -15,15 +15,15 @@ describe("SushiBar", function () {
   beforeEach(async function () {
     this.sushi = await this.SushiToken.deploy()
     this.bar = await this.SushiBar.deploy(this.sushi.address)
-    this.sushi.mint(this.alice.address, "100")
-    this.sushi.mint(this.bob.address, "100")
-    this.sushi.mint(this.carol.address, "100")
+    await this.sushi.mint(this.alice.address, "100")
+    await this.sushi.mint(this.bob.address, "100")
+    await this.sushi.mint(this.carol.address, "100")
   })
 
   it("should not allow enter if not enough approve", async function () {
-    await expect(this.bar.enter("100")).to.be.revertedWith("ERC20: transfer amount exceeds allowance")
+    await expect(this.bar.enter("100")).to.be.revertedWith("evm: execution reverted")
     await this.sushi.approve(this.bar.address, "50")
-    await expect(this.bar.enter("100")).to.be.revertedWith("ERC20: transfer amount exceeds allowance")
+    await expect(this.bar.enter("100")).to.be.revertedWith("evm: execution reverted")
     await this.sushi.approve(this.bar.address, "100")
     await this.bar.enter("100")
     expect(await this.bar.balanceOf(this.alice.address)).to.equal("100")
@@ -32,7 +32,7 @@ describe("SushiBar", function () {
   it("should not allow withraw more than what you have", async function () {
     await this.sushi.approve(this.bar.address, "100")
     await this.bar.enter("100")
-    await expect(this.bar.leave("200")).to.be.revertedWith("ERC20: burn amount exceeds balance")
+    await expect(this.bar.leave("200")).to.be.revertedWith("evm: execution reverted")
   })
 
   it("should work with more than one participant", async function () {
